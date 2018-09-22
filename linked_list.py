@@ -66,8 +66,36 @@ class LinkedList:
             item = next_item
         self.head = prev
 
+    def get(self, index):
+        pos = 0
+        for element in self:
+            if pos == index:
+                return element.data
+            pos = pos + 1
+        raise ListSizeException("index past size of list")
+
+    def remove(self, index):
+        # Special case for beginning of list
+        if index == 0:
+            removed = self.head.data
+            self.head = self.head.next
+            return removed
+
+        # Otherwise, walk the list
+        prev = None
+        curr = self.head
+        for _ in range(index):
+            prev = curr
+            curr = curr.next
+            if curr is None:
+                raise ListSizeException("index past size of list")
+        removed = curr.data
+        prev.next = curr.next
+        return removed
+
     def __iter__(self):
         return LinkedListIterator(self.head)
+
 
 class LinkedListIterator:
     def __init__(self, start):
