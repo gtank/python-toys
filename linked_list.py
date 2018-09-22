@@ -75,6 +75,10 @@ class LinkedList:
         raise ListSizeException("index past size of list")
 
     def remove(self, index):
+        # Special case for empty list
+        if self.head is None:
+            return None
+
         # Special case for beginning of list
         if index == 0:
             removed = self.head.data
